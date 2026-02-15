@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Clear My Path</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            text-align: center;
+        }
+        #unity-container {
+            width: 100%;
+            height: 100vh;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+    </style>
+
+    <!-- 🔥 Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCV3VG5EGpjrSRTT8d_IOSiLIQ7HwG7mqU",
+            authDomain: "clearmypath-b0418.firebaseapp.com",
+            databaseURL: "https://clearmypath-b0418-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "clearmypath-b0418",
+            storageBucket: "clearmypath-b0418.firebasestorage.app",
+            messagingSenderId: "337939369632",
+            appId: "1:337939369632:web:376f277decb88d0817c3c5",
+            measurementId: "G-0H7BS87MB5"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function UploadSessionToFirebase(jsonString) {
+            try {
+                const data = JSON.parse(jsonString);
+                database.ref("GameSessions").push(data);
+                console.log("Session uploaded successfully!");
+            } catch (e) {
+                console.error("Firebase upload error:", e);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+    </div>
+
+    <script>
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+        var config = {
+            dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+            frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+            codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "{{{ COMPANY_NAME }}}",
+            productName: "{{{ PRODUCT_NAME }}}",
+            productVersion: "{{{ PRODUCT_VERSION }}}"
+        };
+
+        var canvas = document.querySelector("#unity-canvas");
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config);
+        };
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>

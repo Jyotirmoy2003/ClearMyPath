@@ -31,6 +31,8 @@ public class LevelLoader : MonoBehaviourPun
         {
             photonView.RPC(nameof(RequestLoadScene), RpcTarget.MasterClient, sceneName);
         }
+        
+        FirebaseSessionLogger.Instance.AddLog("levelStarted: "+sceneName);
     }
 
     [PunRPC]
@@ -74,6 +76,7 @@ public class LevelLoader : MonoBehaviourPun
         }
 
         PhotonNetwork.LoadLevel(nextIndex);
+        FirebaseSessionLogger.Instance.AddLog("levelStarted: "+SceneManager.GetSceneByBuildIndex(nextIndex));
     }
 
     #endregion

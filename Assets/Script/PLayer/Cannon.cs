@@ -54,6 +54,7 @@ public class Cannon : MonoBehaviourPun
         totalAmountOfBoomb --;
 
         UIManager.Instance.UpdateAmmunationInfo(totalAmountOfBoomb);
+        AudioManager.instance.PlaySound("Shot");
         
     }
 
@@ -81,6 +82,7 @@ public class Cannon : MonoBehaviourPun
         totalAmountOfBoomb --;
 
         UIManager.Instance.UpdateAmmunationInfo(totalAmountOfBoomb);
+        AudioManager.instance.PlaySound("Shot");
     }
 }
 

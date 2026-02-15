@@ -13,13 +13,18 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) )
         {
-            OnBackPressed();
+            SetCursorState(false);
+        }
+
+        if(Input.GetMouseButtonDown(2))
+        {
+            ToggleCursorState();
         }
     }
 
-    private void OnBackPressed()
+    public void OnSettingsPressed()
     {
         Debug.Log("Back button pressed");
 
@@ -47,7 +52,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void Resumelevel()
     {
-        OnBackPressed();
+        OnSettingsPressed();
     }
 
 
@@ -56,13 +61,22 @@ public class GameManager : MonoSingleton<GameManager>
         Application.Quit();
     }
 
-    private void OnApplicationFocus(bool hasFocus)
-	{
-        SetCursorState(!isGamePaused);
-	}
+    
 
-	private void SetCursorState(bool newState)
+	public void SetCursorState(bool newState)
 	{
 		Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 	}
+
+    public void ToggleCursorState()
+    {
+        if(Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 }

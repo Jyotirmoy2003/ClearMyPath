@@ -23,6 +23,11 @@ public class MalePlayerController : MonoBehaviour
 
     private void Start()
     {
+        if(Application.isMobilePlatform)
+        {
+            isMobile = true;
+            ConfigurAndroidInput();
+        }
 #if UNITY_ANDROID || UNITY_IOS
         isMobile = true;
         ConfigurAndroidInput();
@@ -100,6 +105,7 @@ public class MalePlayerController : MonoBehaviour
 
         if (!isMobile)
         {
+            if(Cursor.lockState != CursorLockMode.Locked) return;
             inputY = Input.GetAxis("Mouse Y") * verticalSensitivity * 100f * Time.deltaTime;
         }
         else
@@ -145,5 +151,6 @@ public class MalePlayerController : MonoBehaviour
         float value = (float)data;
 
         verticalSensitivity = value;
+        horizontalSpeed =value * 30f;
     }
 }

@@ -66,6 +66,14 @@ public class LauncherManager : MonoBehaviourPunCallbacks
         DisableAllPanel();
         lobbyPanel.SetActive(true);
     }
+    
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("Disconnected from Photon: " + cause);
+
+        connectPanel.SetActive(true);
+        connectPanelText.text = "Please refresh the page, cause:\n"+cause;
+    }
 
     #endregion
 
@@ -99,9 +107,7 @@ public class LauncherManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             string roomCode = PhotonNetwork.CurrentRoom.Name;
-            GUIUtility.systemCopyBuffer = roomCode;
-
-            Debug.Log("Room Code Copied: " + roomCode);
+            ClipboardHelper.Instance.CopyRoomCode(roomCode);
             //UIManager.Instance.PunchUI(copyButtonRect, new Vector2(20, 0), 0.2f);
 
         }

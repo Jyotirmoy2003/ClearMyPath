@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HammerObstacle : ObstacleBase
 {
+    [SerializeField] LayerMask platfromLayer;
+    [SerializeField] AudioSource slamAudio;
     [Header("Rotation Settings")]
     [SerializeField] private float startAngle = 0f;
     [SerializeField] private float hitAngle = -90f;
@@ -65,9 +67,30 @@ public class HammerObstacle : ObstacleBase
         transform.localEulerAngles = rot;
     }
 
-    
 
-    
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+        if(other.gameObject.layer == platfromLayer )
+        {
+            mashEffectParticle.Play();
+            slamAudio.Stop();
+            slamAudio.Play();
+        }
+    }
+
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
+        if(collision.gameObject.layer == platfromLayer )
+        {
+            mashEffectParticle.Play();
+            slamAudio.Stop();
+            slamAudio.Play();
+        }
+    }
 
     
 }

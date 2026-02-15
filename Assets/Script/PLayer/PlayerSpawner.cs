@@ -21,21 +21,24 @@ public class PlayerSpawner : MonoBehaviour
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
             return;
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient )
         {
             PhotonNetwork.Instantiate(
                 malePrefabName,
                 maleSpawnPoint.position,
                 maleSpawnPoint.rotation
             );
+            GameAssets.Instance.MasterSpawned = true;
         }
         else
         {
+            if(!GameAssets.Instance.clientSpawned)
             PhotonNetwork.Instantiate(
                 femalePrefabName,
                 femaleSpawnPoint.position,
                 femaleSpawnPoint.rotation
             );
+            GameAssets.Instance.clientSpawned = true;
         }
             CheckpointSystem.Instance.SetCheckpoint(femaleSpawnPoint);
     }

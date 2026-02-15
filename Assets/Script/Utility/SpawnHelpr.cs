@@ -56,11 +56,13 @@ public class SpawnHelpr : MonoBehaviour
             }
         }
 
+        GameManager.Instance.SetCursorState(true);
         Invoke(nameof(ShowScene),2f);
     }
 
     void ShowScene()
     {
+
         UIManager.Instance.BlackScreenFadeOut();
     }
 }

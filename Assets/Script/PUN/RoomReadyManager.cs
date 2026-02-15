@@ -41,6 +41,8 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
 
     Send this room code to your favorite human and tell them to join you.
     This story needs two players… and maybe a little love.");
+            FirebaseSessionLogger.Instance.StartSession();
+            FirebaseSessionLogger.Instance.AddLog("Master ping: "+PingFPSDebugger.Instance.GetCurrentPing().ToString());
         }
         else
         {
@@ -58,6 +60,10 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
             
             Typewriter.Instance.SkipTyping();
             Typewriter.Instance.StartTyping(message);
+
+            
+            
+            FirebaseSessionLogger.Instance.SetPlayers(player1,player2);
         }
     }
 
@@ -225,13 +231,19 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+
         if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
         {
             readyStartButton.interactable = false;
             return;
         }
 
+
         readyStartButton.interactable = AllPlayersReady();
+        
+        #if UNITY_EDITOR
+        readyStartButton.interactable = true;
+        #endif
     }
 
     #endregion

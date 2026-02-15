@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "337939369632",
+    "firebase_url": "https://clearmypath-b0418-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "clearmypath-b0418",
+    "storage_bucket": "clearmypath-b0418.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337939369632:android:8504b6f1e7a6e24817c3c5",
+        "android_client_info": {
+          "package_name": "com.JyGames.ClearMyPath"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxzjlOe-fmc6PYlCckRNTxb6wbh6qO0Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

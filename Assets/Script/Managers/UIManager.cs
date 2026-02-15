@@ -21,6 +21,7 @@ public class UIManager : MonoSingleton<UIManager>
     [Foldout("Input")] [SerializeField] GameObject buttonInputForMasterAndroid;
     [Foldout("Input")] [SerializeField] Slider sensetivitySlider;
     [Foldout("Input")] [SerializeField] GameObject cursorImage;
+    [SerializeField] GameObject devtalkPanel;
     [SerializeField] GameEvent Event_OnSensetivityValueChnaged;
 
 
@@ -29,6 +30,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         blackScreenFade.gameObject.SetActive(true);
         SetPauseMenuStatus(false);
+        emojiButtonContainer.SetActive(false);
 
     }
 
@@ -87,20 +89,25 @@ public class UIManager : MonoSingleton<UIManager>
     {
 
         cursorImage.SetActive(isMaster);
-        #if (UNITY_IOS || UNITY_ANDROID)
-        if(isMaster)
+        joystickInputforClientAndroid.SetActive(false);
+        buttonInputForMasterAndroid.SetActive(false);
+       if(Application.isMobilePlatform)
         {
-            buttonInputForMasterAndroid.SetActive(true);
-            joystickInputforClientAndroid.SetActive(false);
             
-        }
-        else
-        {
-            joystickInputforClientAndroid.SetActive(true);
-            buttonInputForMasterAndroid.SetActive(false);
-        }
+            if(isMaster)
+            {
+                buttonInputForMasterAndroid.SetActive(true);
+                joystickInputforClientAndroid.SetActive(false);
+                
+            }
+            else
+            {
+                joystickInputforClientAndroid.SetActive(true);
+                buttonInputForMasterAndroid.SetActive(false);
+            }
 
-        #endif
+        }
+        
 
         
     }
@@ -116,5 +123,19 @@ public class UIManager : MonoSingleton<UIManager>
         sensetivitySlider.value = currentValue;
     }
 
+
+    public void ActivateDevTalk()
+    {
+        devtalkPanel.SetActive(true);
+    }
+
+    #region EMOJI
+    [SerializeField] GameObject emojiButtonContainer;
+    public void OnMessgButtonPressed()
+    {
+        emojiButtonContainer.SetActive(!emojiButtonContainer.activeSelf);
+    }
+
+    #endregion
 
 }

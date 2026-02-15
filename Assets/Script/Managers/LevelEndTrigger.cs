@@ -23,6 +23,7 @@ public class LevelEndTrigger : MonoBehaviour
             Debug.Log("Level Complete");
 
             LevelLoader.Instance.LoadNextLevel();
+            AudioManager.instance.PlaySound("Win");
         }
     }
 }

@@ -84,6 +84,7 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
         currentHealth = maxHealth;
 
         ragdollSwitcher?.DisableRagdoll();
+        AudioManager.instance.PlaySound("Respawn");
 
        
     }

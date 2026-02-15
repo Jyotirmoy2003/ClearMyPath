@@ -11,4 +11,7 @@ public class GameAssets : MonoSingleton<GameAssets>
     public HoldButton maleRightSideButton;
     public HoldButton maleShootButton;
 
+    public bool MasterSpawned = false;
+    public bool clientSpawned = false;
+
 }
