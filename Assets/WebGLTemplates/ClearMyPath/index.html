@@ -81,5 +81,14 @@
         };
         document.body.appendChild(script);
     </script>
+
+    <script>
+    window.addEventListener("beforeunload", function (e) {
+        if (typeof unityInstance !== "undefined") {
+            unityInstance.SendMessage("WebglJavascriptBridge", "OnBrowserClosing");
+        }
+    });
+    </script>
+
 </body>
 </html>

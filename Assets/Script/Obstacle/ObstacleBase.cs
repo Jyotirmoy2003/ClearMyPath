@@ -18,10 +18,15 @@ public abstract class ObstacleBase : MonoBehaviourPun, IObstacle, IDamageable
     private float lastDamageTime = -Mathf.Infinity;
     private bool isStunned;
     private float stunTimer;
+    protected double networkStartTime;
+    protected double stunStartNetworkTime;
+    protected double pausedElapsedTime;
+
+
 
     protected virtual void Awake()
     {
-        Update_Del = ActiveUpdate;
+        
 
         if (stunnedParticle != null)
             stunnedParticle.Stop();
@@ -29,10 +34,6 @@ public abstract class ObstacleBase : MonoBehaviourPun, IObstacle, IDamageable
 
     private void Update()
     {
-        // Only Master simulates movement & timer
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         Update_Del?.Invoke();
     }
 
@@ -80,24 +81,43 @@ public abstract class ObstacleBase : MonoBehaviourPun, IObstacle, IDamageable
 
         float duration = stunDuration > 0 ? stunDuration : defaultStunDuration;
 
-        // Tell everyone visually
-        photonView.RPC(nameof(RPC_StartStunVisual), RpcTarget.All);
+        double stunTime = PhotonNetwork.Time;
 
-        // Master handles timer
-        isStunned = true;
-        stunTimer = duration;
-
-        Update_Del -= ActiveUpdate;
-        Update_Del += HandleStun;
+        photonView.RPC(nameof(RPC_StunObstacle), RpcTarget.All, stunTime, duration);
     }
 
+
     [PunRPC]
-    public void RPC_StartStunVisual()
+    public void RPC_StunObstacle(double networkTime, float duration)
     {
+        double lag = PhotonNetwork.Time - networkTime;
+
+        ApplyStun(duration, lag);
+    }
+
+
+    
+
+    private void ApplyStun(float duration, double lag)
+    {
+        isStunned = true;
+
+        stunTimer = duration - (float)lag;
+
+        stunStartNetworkTime = PhotonNetwork.Time;
+        pausedElapsedTime = PhotonNetwork.Time - networkStartTime;
+
+
+        if (stunTimer < 0)
+            stunTimer = 0;
+
         if (stunnedParticle != null)
             stunnedParticle.Play();
 
         stunedFeedback?.PlayFeedback();
+
+        Update_Del -= ActiveUpdate;
+        Update_Del += HandleStun;
     }
 
     private void HandleStun()
@@ -106,26 +126,43 @@ public abstract class ObstacleBase : MonoBehaviourPun, IObstacle, IDamageable
 
         if (stunTimer <= 0f)
         {
-            photonView.RPC(nameof(RPC_EndStunVisual), RpcTarget.All);
+            Update_Del -= HandleStun;
+            Update_Del += ActiveUpdate;
 
             isStunned = false;
 
-            Update_Del += ActiveUpdate;
-            Update_Del -= HandleStun;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC(nameof(RPC_EndStunVisual), RpcTarget.All);
+            }
         }
     }
+
 
     [PunRPC]
     public void RPC_EndStunVisual()
     {
         if (stunnedParticle != null)
             stunnedParticle.Stop();
+        networkStartTime = PhotonNetwork.Time - pausedElapsedTime;
+
     }
+
+
 
     #endregion
 
     public void TakeDamage(int amount)
     {
         OnShot(0);
+    }
+
+    public void ListnToOnInitEvent(Component sender,object data)
+    {
+        if((bool)data)
+        {
+            networkStartTime = PhotonNetwork.Time;
+            Update_Del += ActiveUpdate;
+        }
     }
 }

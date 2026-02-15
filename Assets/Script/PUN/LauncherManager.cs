@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using ExitGames.Client.Photon;
 using NaughtyAttributes;
+using EasyPopupSystem;
+using System;
 
 public class LauncherManager : MonoBehaviourPunCallbacks
 {
@@ -28,7 +30,11 @@ public class LauncherManager : MonoBehaviourPunCallbacks
     void Start()
     {
         DisableAllPanel();
-        namePanel.SetActive(true);   
+        namePanel.SetActive(true);
+        if(!String.IsNullOrEmpty(PlayerPrefs.GetString("PlayerName")))
+        {
+            nameInput.text = PlayerPrefs.GetString("PlayerName");
+        }
     }
 
     void DisableAllPanel()
@@ -45,11 +51,16 @@ public class LauncherManager : MonoBehaviourPunCallbacks
     void ConnectToPhoton()
     {
         if (string.IsNullOrEmpty(nameInput.text))
+        {
+            EasyPopupManager.Instance.CreateToast("ErrorValidName");
             return;
+        }
 
         PhotonNetwork.NickName = nameInput.text;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
+
+        PlayerPrefs.SetString("PlayerName",nameInput.text);
 
         connectPanel.SetActive(true);
         connectPanelText.text = "Connecting to server..";
@@ -107,8 +118,10 @@ public class LauncherManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             string roomCode = PhotonNetwork.CurrentRoom.Name;
-            ClipboardHelper.Instance.CopyRoomCode(roomCode);
-            //UIManager.Instance.PunchUI(copyButtonRect, new Vector2(20, 0), 0.2f);
+            WebglJavascriptBridge.Instance.CopyRoomCode(roomCode); 
+
+            EasyPopupManager.Instance.CreateToast("CodeCopy"); //Toast
+            
 
         }
     }
@@ -205,6 +218,7 @@ public class LauncherManager : MonoBehaviourPunCallbacks
 
     public void QuitPressed()
     {
+        WebglJavascriptBridge.Instance.OnApicationQuit();
         Application.Quit();
     }
 }

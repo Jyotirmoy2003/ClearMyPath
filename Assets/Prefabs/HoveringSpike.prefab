@@ -872,6 +872,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8234184114631757035}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f350625ae6754ec4aa389dd7701db0c8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8843171984251142781}
   m_SourcePrefab: {fileID: 100100000, guid: f350625ae6754ec4aa389dd7701db0c8, type: 3}
 --- !u!4 &7486149877306727637 stripped
 Transform:
@@ -949,6 +953,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5178041, y: 1.6655709, z: 1.6655674}
   m_Center: {x: -0.07717703, y: -2.1642318, z: 1.4277639}
+--- !u!114 &8843171984251142781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831747704454891119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e7d22a1b001464e88cbe2476508a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 11400000, guid: 33a8d888103f12548a089aca9962bdff, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3922245154244365960}
+        m_TargetAssemblyTypeName: HoveringSpike, Assembly-CSharp
+        m_MethodName: ListnToOnInitEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &8423478991632628475
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class HammerObstacle : ObstacleBase
@@ -33,32 +34,30 @@ public class HammerObstacle : ObstacleBase
 
     private void HandleSwing()
     {
-        timer += Time.deltaTime;
+        double elapsed = PhotonNetwork.Time - networkStartTime;
 
-        if (timer >= totalCycleTime)
-            timer -= totalCycleTime;
+        float cycleTime = totalCycleTime;
 
-        float normalizedTime = timer / totalCycleTime;
+        float normalizedTime = (float)(elapsed % cycleTime) / cycleTime;
 
         float angle;
 
         if (normalizedTime <= 0.5f)
         {
-            // Forward swing
-            float t = normalizedTime / 0.5f; // Remap 0–0.5 to 0–1
+            float t = normalizedTime / 0.5f;
             float curved = motionCurve.Evaluate(t);
             angle = Mathf.Lerp(startAngle, hitAngle, curved);
         }
         else
         {
-            // Return swing
-            float t = (normalizedTime - 0.5f) / 0.5f; // Remap 0.5–1 to 0–1
+            float t = (normalizedTime - 0.5f) / 0.5f;
             float curved = motionCurve.Evaluate(t);
-            angle = Mathf.Lerp(startAngle, hitAngle, curved);
+            angle = Mathf.Lerp(startAngle,hitAngle,curved);
         }
 
         SetRotation(angle);
     }
+
 
     private void SetRotation(float angle)
     {
@@ -72,8 +71,8 @@ public class HammerObstacle : ObstacleBase
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-
-        if(other.gameObject.layer == platfromLayer )
+        Debug.Log("trigger layer tag:" +other.gameObject.layer +" and our layer "+platfromLayer.value);
+        if ((platfromLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             mashEffectParticle.Play();
             slamAudio.Stop();
@@ -81,16 +80,7 @@ public class HammerObstacle : ObstacleBase
         }
     }
 
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        base.OnCollisionEnter(collision);
-        if(collision.gameObject.layer == platfromLayer )
-        {
-            mashEffectParticle.Play();
-            slamAudio.Stop();
-            slamAudio.Play();
-        }
-    }
+   
 
     
 }

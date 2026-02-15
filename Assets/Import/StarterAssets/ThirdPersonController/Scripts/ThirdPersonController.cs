@@ -61,6 +61,7 @@ namespace StarterAssets
         public LayerMask GroundLayers;
 
         [Header("Cinemachine")]
+        [SerializeField] float sensetivity = 5f;
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
 
@@ -199,8 +200,8 @@ namespace StarterAssets
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensetivity;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensetivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -401,6 +402,12 @@ namespace StarterAssets
         public void ListenToOnPlayerRespawned(Component sender,object data)
         {
             isPlayerDead = false;
+        }
+
+        public void ListToOnSensetivityValueChanged(Component sender,object data)
+        {
+            if(data is float)
+            sensetivity = (float)data;
         }
 
     }

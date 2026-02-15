@@ -85,14 +85,10 @@ public class LevelLoader : MonoBehaviourPun
 
     public void RestartLevel()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PerformRestart();
-        }
-        else
-        {
-            photonView.RPC(nameof(RequestRestart), RpcTarget.MasterClient);
-        }
+        
+        
+        photonView.RPC(nameof(RequestRestart), RpcTarget.All);
+        
     }
 
     [PunRPC]

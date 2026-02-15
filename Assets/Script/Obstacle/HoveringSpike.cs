@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class HoveringSpike : ObstacleBase
@@ -9,8 +10,6 @@ public class HoveringSpike : ObstacleBase
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
-
-    private float timer;
 
     protected override void Awake()
     {
@@ -27,28 +26,24 @@ public class HoveringSpike : ObstacleBase
 
     private void HandleHover()
     {
-        timer += Time.deltaTime;
+        double elapsed = PhotonNetwork.Time - networkStartTime;
 
-        if (timer >= cycleTime)
-            timer -= cycleTime;
-
-        float normalizedTime = timer / cycleTime;
+        float normalizedTime = (float)(elapsed % cycleTime) / cycleTime;
 
         float t;
 
         if (normalizedTime <= 0.5f)
         {
-            // Going up
             float halfT = normalizedTime / 0.5f;
             t = motionCurve.Evaluate(halfT);
             transform.position = Vector3.Lerp(startPosition, targetPosition, t);
         }
         else
         {
-            // Coming down
             float halfT = (normalizedTime - 0.5f) / 0.5f;
             t = motionCurve.Evaluate(halfT);
             transform.position = Vector3.Lerp(targetPosition, startPosition, t);
         }
     }
+
 }

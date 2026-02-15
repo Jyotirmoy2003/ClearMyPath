@@ -1,13 +1,35 @@
 using System.Collections;
+using System.Collections.Generic;
+using EasyPopupSystem;
+using Photon.Pun;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
     public bool isGamePaused = false;
+    [SerializeField] float gamevalidateTime = 3f;
+    private SpawnHelpr[] validateNumberOfSpawnHelper;
 
     void Start()
     {
-        
+        Invoke(nameof(ValidateGame),gamevalidateTime);
+    }
+
+    void ValidateGame()
+    {
+        validateNumberOfSpawnHelper = FindObjectsOfType<SpawnHelpr>();
+
+        if(validateNumberOfSpawnHelper.Length != 2)
+        {
+            //something went wrong
+            EasyPopupManager.Instance.CreateToast("ErrorNotValidGame");
+            Invoke(nameof(RequestRestartGame),3f);
+        }
+    }
+
+    void RequestRestartGame()
+    {
+       WebglJavascriptBridge.Instance.OnApicationQuit();
     }
 
 
@@ -18,8 +40,13 @@ public class GameManager : MonoSingleton<GameManager>
             SetCursorState(false);
         }
 
-        if(Input.GetMouseButtonDown(2))
+        if(Input.GetMouseButtonDown(1))
         {
+            if(isGamePaused)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                return;
+            }
             ToggleCursorState();
         }
     }
@@ -58,6 +85,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnQuiteButtonPressed()
     {
+        WebglJavascriptBridge.Instance.OnApicationQuit();
         Application.Quit();
     }
 

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class SimpleRotator : ObstacleBase
@@ -12,16 +13,21 @@ public class SimpleRotator : ObstacleBase
 
     protected override void ActiveUpdate()
     {
-        Vector3 rotation = rotationAxis.normalized * rotationSpeed * Time.deltaTime;
+        double elapsed = PhotonNetwork.Time - networkStartTime;
+
+        float angle = (float)(elapsed * rotationSpeed);
+
+        Quaternion rotation = Quaternion.AngleAxis(angle, rotationAxis.normalized);
 
         if (useLocalRotation)
         {
-            target.Rotate(rotation, Space.Self);
+            target.localRotation = rotation;
         }
         else
         {
-            target.Rotate(rotation, Space.World);
+            target.rotation = rotation;
         }
     }
+
 
 }

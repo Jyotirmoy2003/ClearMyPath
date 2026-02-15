@@ -12,5 +12,16 @@ mergeInto(LibraryManager.library, {
         }).catch(function (err) {
             console.error("Clipboard copy failed:", err);
         });
+    },
+
+    ExitFullscreen: function () {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    },
+
+    ReloadPage: function () {
+        window.location.reload();
     }
+
 });

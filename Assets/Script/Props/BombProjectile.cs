@@ -6,6 +6,8 @@ public class BombProjectile : MonoBehaviour
     [SerializeField] private float speed = 20f;
     [SerializeField] private float lifetime = 5f;
     [SerializeField] private float stunDuration = 2f;
+    [SerializeField] ParticleSystem exlosionEffect;
+    [SerializeField] AudioSource exlosionAudio;
 
     private ObjectPool pool;
     private float timer;
@@ -38,7 +40,10 @@ public class BombProjectile : MonoBehaviour
             }
         }
 
-        ReturnToPool();
+        
+        exlosionAudio.Play();
+        exlosionEffect.Play();
+        Invoke(nameof(ReturnToPool),2f);
     }
 
     private void ReturnToPool()

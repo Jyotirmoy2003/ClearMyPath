@@ -19,6 +19,7 @@ public class LevelEnded : MonoBehaviour
 
     public void Quit()
     {
+        WebglJavascriptBridge.Instance.OnApicationQuit();
         Application.Quit();
     }
 

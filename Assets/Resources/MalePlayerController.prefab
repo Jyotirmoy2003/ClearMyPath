@@ -106,8 +106,8 @@ MonoBehaviour:
   - {fileID: 8254006053836817478}
   - {fileID: 7393699993491696367}
   - {fileID: 3041544502498921699}
-  disbaleOnMyView:
-  - {fileID: 7958848728531636601}
+  disbaleOnMyView: []
+  meshRendererToDisableinMyView: {fileID: 5675279739891423568}
   starterAssetsInputs: {fileID: 0}
 --- !u!114 &4876964234516965446
 MonoBehaviour:
@@ -449,8 +449,8 @@ Camera:
   m_GameObject: {fileID: 7041095935083593945}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.7647059, g: 0.78431374, b: 0.69803923, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

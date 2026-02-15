@@ -10,22 +10,7 @@ public class FirebaseSessionLogger : MonoSingleton<FirebaseSessionLogger>
 
     private bool sessionStarted = false;
 
-    #region WEBGL BRIDGE
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-    [DllImport("__Internal")]
-    private static extern void UploadSession(string json);
-#endif
-
-    private void UploadToJS(string json)
-    {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        UploadSession(json);
-        Debug.Log("Session sent to JS Firebase.");
-#endif
-    }
-
-    #endregion
 
     #region SESSION CONTROL
 
@@ -75,7 +60,7 @@ public class FirebaseSessionLogger : MonoSingleton<FirebaseSessionLogger>
         string json = JsonUtility.ToJson(currentSession);
 
         // 🚀 WebGL Upload
-        UploadToJS(json);
+        WebglJavascriptBridge.Instance.UploadToJS(json);
 
         sessionStarted = false;
         currentSession = null;

@@ -11,6 +11,7 @@ public class CheckpointSystem : MonoSingleton<CheckpointSystem>
     public UnityEvent playerRespawned;
 
     private Transform currentCheckpoint;
+    private bool isRespawning = false;
 
 
     public void SetCheckpoint(Transform checkpoint)
@@ -20,6 +21,8 @@ public class CheckpointSystem : MonoSingleton<CheckpointSystem>
 
     public void RespawnPlayer(Transform player)
     {
+        if(isRespawning) return;
+        isRespawning = true;
         StartCoroutine(RespawnRoutine(player));
     }
 
@@ -34,6 +37,7 @@ public class CheckpointSystem : MonoSingleton<CheckpointSystem>
             //notify
             playerRespawned?.Invoke();
             Event_OnPlayerRespawned.Raise(this,true);
+            isRespawning = false;
         }
     }
 }

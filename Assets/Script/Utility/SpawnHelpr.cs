@@ -10,6 +10,7 @@ public class SpawnHelpr : MonoBehaviour
     [SerializeField] List<GameObject> objectsToDeisable = new List<GameObject>();
     [SerializeField] List<Behaviour> disableComponents = new List<Behaviour>();
     [SerializeField] List<GameObject> disbaleOnMyView = new List<GameObject>();
+   [SerializeField] MeshRenderer meshRendererToDisableinMyView;
     [SerializeField] StarterAssetsInputs starterAssetsInputs;
 
     void Awake()
@@ -38,6 +39,8 @@ public class SpawnHelpr : MonoBehaviour
             {
                 item.SetActive(false);
             }
+            if(meshRendererToDisableinMyView)
+            meshRendererToDisableinMyView.enabled = false;
 
             UIManager.Instance.SetControllstatus(PhotonNetwork.IsMasterClient);
             if(starterAssetsInputs)

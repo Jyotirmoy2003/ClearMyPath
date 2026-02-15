@@ -26,6 +26,8 @@ public class Cannon : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
+        if(Cursor.lockState == CursorLockMode.None) return;
+
         if(totalAmountOfBoomb <= 0)
         {
             //no ammo;
