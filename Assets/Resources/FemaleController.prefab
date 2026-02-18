@@ -276,6 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   ptv: {fileID: 6994594764098367973}
   ragdollSwitcher: {fileID: 3725554678842760430}
+  characterController: {fileID: 2530418207012668033}
   maxHealth: 1
   PlayerDied:
     m_PersistentCalls:
@@ -305,6 +306,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Event_OnPlayerDied: {fileID: 11400000, guid: 3f2c105daf6c5334d8921d581aada254, type: 2}
+  isDead: 0
+  isImmune: 0
 --- !u!114 &163581944645071972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +641,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3909399673762441649}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b8f5787a40dcce478ccdb12dd03cb94,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8286504159714993710}
     - targetCorrespondingSourceObject: {fileID: -8343894014087287100, guid: 3b8f5787a40dcce478ccdb12dd03cb94,
         type: 3}
       insertIndex: -1
@@ -1639,6 +1646,48 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &8286504159714993710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360327029801014079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f8d84a8038f04a861ed1bbfacf3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventSender
+  Event_OnFootstep:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2530418207012668032}
+        m_TargetAssemblyTypeName: StarterAssets.ThirdPersonController, Assembly-CSharp
+        m_MethodName: OnFootstep
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Event_OnLand:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2530418207012668032}
+        m_TargetAssemblyTypeName: StarterAssets.ThirdPersonController, Assembly-CSharp
+        m_MethodName: OnLand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7408635947000152234 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8343894014087287100, guid: 3b8f5787a40dcce478ccdb12dd03cb94,

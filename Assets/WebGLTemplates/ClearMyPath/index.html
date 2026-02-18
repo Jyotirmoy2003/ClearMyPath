@@ -47,11 +47,11 @@
         let firebaseReady = false;
          firebase.auth().signInAnonymously()
         .then(() => {
-            console.log("Anonymous login success");
+            // console.log("Anonymous login success");
             firebaseReady = true;
         })
         .catch((error) => {
-            console.error("Auth error:", error);
+            // console.error("Auth error:", error);
         });
         
         const database = firebase.database();
@@ -59,7 +59,7 @@
         function UploadSessionToFirebase(jsonString) {
 
             if (!firebaseReady) {
-                console.log("Firebase not ready yet, retrying...");
+                // console.log("Firebase not ready yet, retrying...");
                 
                 setTimeout(function() {
                     UploadSessionToFirebase(jsonString);
@@ -71,10 +71,10 @@
             firebase.database().ref("GameSessions")
                 .push(JSON.parse(jsonString))
                 .then(() => {
-                    console.log("Session uploaded successfully.");
+                    // console.log("Session uploaded successfully.");
                 })
                 .catch((error) => {
-                    console.error("Firebase upload error:", error);
+                    // console.error("Firebase upload error:", error);
                 });
         }
 

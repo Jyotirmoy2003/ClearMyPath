@@ -51,8 +51,15 @@ public class LauncherManager : MonoBehaviourPunCallbacks
     void ConnectToPhoton()
     {
         if (string.IsNullOrEmpty(nameInput.text))
-        {
+        {   
+
             EasyPopupManager.Instance.CreateToast("ErrorValidName");
+            return;
+        }
+
+        if(nameInput.text.Length > 20)
+        {
+            EasyPopupManager.Instance.CreateToast("ErrorNameTooBig");
             return;
         }
 

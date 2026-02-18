@@ -46,4 +46,10 @@ public class HoveringSpike : ObstacleBase
         }
     }
 
+    [NaughtyAttributes.Button]
+    void Init()
+    {
+        ListnToOnInitEvent(this,true);
+    }
+
 }

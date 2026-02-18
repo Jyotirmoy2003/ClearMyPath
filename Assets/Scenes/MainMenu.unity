@@ -556,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &178501605
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1685,6 +1685,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &513836562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1922,7 +1934,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a37444d63379b3a4694f15ed6e91d8c9, type: 2}
-  m_sharedMaterial: {fileID: 2058258155275468072, guid: e576c2bd110c0304db1e7183ef8bf6ee,
+  m_sharedMaterial: {fileID: -1648559940375601971, guid: a37444d63379b3a4694f15ed6e91d8c9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2308,6 +2320,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &680550211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2470,6 +2494,18 @@ MonoBehaviour:
       - m_Target: {fileID: 6830461}
         m_TargetAssemblyTypeName: RoomReadyManager, Assembly-CSharp
         m_MethodName: OnReadyStartButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2919,6 +2955,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1166607241}
         m_TargetAssemblyTypeName: LauncherManager, Assembly-CSharp
         m_MethodName: CreateRoomButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3555,6 +3603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1166607240}
   - component: {fileID: 1166607241}
+  - component: {fileID: 1166607242}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -3600,6 +3649,103 @@ MonoBehaviour:
   clientPlayerName: {fileID: 1489683329}
   joinRoomPanel: {fileID: 1415566887}
   joinCodeInput: {fileID: 279212692}
+--- !u!82 &1166607242
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166607239}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 9cb19eb032d304b07acec596ae2ce4a4, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1171422694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4104,10 +4250,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Name...
+  m_text: Enter Game Name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a37444d63379b3a4694f15ed6e91d8c9, type: 2}
-  m_sharedMaterial: {fileID: 2058258155275468072, guid: e576c2bd110c0304db1e7183ef8bf6ee,
+  m_sharedMaterial: {fileID: -1648559940375601971, guid: a37444d63379b3a4694f15ed6e91d8c9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4173,7 +4319,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1247717562
@@ -4797,6 +4943,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1383977612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5404,7 +5562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1572851674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5489,7 +5647,7 @@ PrefabInstance:
     - target: {fileID: 696306186191318589, guid: 0f4370b2bec1a4b318f445d7f81636aa,
         type: 3}
       propertyPath: toastScriptableObjects.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 696306186191318589, guid: 0f4370b2bec1a4b318f445d7f81636aa,
         type: 3}
@@ -5508,6 +5666,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 696306186191318589, guid: 0f4370b2bec1a4b318f445d7f81636aa,
         type: 3}
+      propertyPath: toastScriptableObjects.Array.data[3].toastName
+      value: ErrorNameTooBig
+      objectReference: {fileID: 0}
+    - target: {fileID: 696306186191318589, guid: 0f4370b2bec1a4b318f445d7f81636aa,
+        type: 3}
       propertyPath: toastScriptableObjects.Array.data[0].toastScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: d9f1e91ed26ba734b8c7570f26b8011f,
@@ -5523,6 +5686,12 @@ PrefabInstance:
       propertyPath: toastScriptableObjects.Array.data[2].toastScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: ce740de7d5c07d2489e2177e70f7e708,
+        type: 2}
+    - target: {fileID: 696306186191318589, guid: 0f4370b2bec1a4b318f445d7f81636aa,
+        type: 3}
+      propertyPath: toastScriptableObjects.Array.data[3].toastScriptableObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 00c26f6d956fd454eb495ee1f5a4f90a,
         type: 2}
     - target: {fileID: 3134744828456042218, guid: 0f4370b2bec1a4b318f445d7f81636aa,
         type: 3}
@@ -5644,7 +5813,7 @@ MonoBehaviour:
   m_text: Submit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a37444d63379b3a4694f15ed6e91d8c9, type: 2}
-  m_sharedMaterial: {fileID: 2058258155275468072, guid: e576c2bd110c0304db1e7183ef8bf6ee,
+  m_sharedMaterial: {fileID: -1648559940375601971, guid: a37444d63379b3a4694f15ed6e91d8c9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5669,12 +5838,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 50
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 50
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -5710,7 +5879,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1634648436
@@ -6479,6 +6648,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1166607241}
         m_TargetAssemblyTypeName: LauncherManager, Assembly-CSharp
         m_MethodName: OnJoinRoomPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1166607242}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,6 +5,7 @@ public class BombPouch : MonoBehaviourPun
 {
     [SerializeField] private int bombAmount = 3;
     [SerializeField] ParticleSystem collectedParticle;
+    [SerializeField] GameObject bombMesh;
 
     private bool collected = false;
 
@@ -49,6 +50,7 @@ public class BombPouch : MonoBehaviourPun
 
         collectedParticle.Play();
 
-        Destroy(gameObject);
+        bombMesh.SetActive(false);
+        Destroy(gameObject,2f); //wait for particle to finish
     }
 }

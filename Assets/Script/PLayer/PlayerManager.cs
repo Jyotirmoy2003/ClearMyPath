@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
 {
     [SerializeField] PhotonTransformView ptv;
     [SerializeField] private RagdollSwitcher ragdollSwitcher;
+    [SerializeField] CharacterController characterController;
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 1;
@@ -18,7 +19,8 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
     [Header("Game Event")]
     [SerializeField] private GameEvent Event_OnPlayerDied;
 
-    private bool isDead = false;
+    [SerializeField]private bool isDead = false;
+    [SerializeField]private bool isImmune = false;
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (isDead)
+        if (isDead || isImmune)
             return;
 
         currentHealth -= amount;
@@ -52,20 +54,22 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
     private void RPC_Die()
     {
         if (isDead) return;
-        ptv.enabled = false;
+        //ptv.enabled = false;
+        characterController.enabled = false;
         isDead = true;
 
         ragdollSwitcher?.EnableRagdoll();
 
         PlayerDied?.Invoke();
 
+        isImmune = true;
         if (Event_OnPlayerDied != null)
         {
             Event_OnPlayerDied.Raise(this, true);
         }
 
-        
-        CheckpointSystem.Instance.RespawnPlayer(this.transform);
+        if(!PhotonNetwork.IsMasterClient)
+            CheckpointSystem.Instance.RespawnPlayer(this.transform);
         
     }
 
@@ -86,14 +90,20 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
 
         ragdollSwitcher?.DisableRagdoll();
         AudioManager.instance.PlaySound("Respawn");
+        //ptv.enabled = true;
         Invoke(nameof(EnableComponents),1f);
        
     }
 
     void EnableComponents()
     {
+        isImmune = false;
         isDead = false;
-        ptv.enabled = true;
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            characterController.enabled = true;
+        }
+        
     }
 
     #endregion
