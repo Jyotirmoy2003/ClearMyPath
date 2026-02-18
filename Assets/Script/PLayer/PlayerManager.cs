@@ -5,6 +5,7 @@ using System.Collections;
 
 public class PlayerManager : MonoBehaviourPun, IDamageable
 {
+    [SerializeField] PhotonTransformView ptv;
     [SerializeField] private RagdollSwitcher ragdollSwitcher;
 
     [Header("Health Settings")]
@@ -51,7 +52,7 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
     private void RPC_Die()
     {
         if (isDead) return;
-
+        ptv.enabled = false;
         isDead = true;
 
         ragdollSwitcher?.EnableRagdoll();
@@ -80,13 +81,19 @@ public class PlayerManager : MonoBehaviourPun, IDamageable
     [PunRPC]
     private void RPC_Respawn()
     {
-        isDead = false;
+        
         currentHealth = maxHealth;
 
         ragdollSwitcher?.DisableRagdoll();
         AudioManager.instance.PlaySound("Respawn");
-
+        Invoke(nameof(EnableComponents),1f);
        
+    }
+
+    void EnableComponents()
+    {
+        isDead = false;
+        ptv.enabled = true;
     }
 
     #endregion

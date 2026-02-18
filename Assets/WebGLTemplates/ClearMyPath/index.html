@@ -24,8 +24,10 @@
     </style>
 
     <!-- 🔥 Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
 
     <script>
         const firebaseConfig = {
@@ -40,21 +42,102 @@
         };
 
         firebase.initializeApp(firebaseConfig);
+        
+        // 🔐 Anonymous Authentication
+        let firebaseReady = false;
+         firebase.auth().signInAnonymously()
+        .then(() => {
+            console.log("Anonymous login success");
+            firebaseReady = true;
+        })
+        .catch((error) => {
+            console.error("Auth error:", error);
+        });
+        
         const database = firebase.database();
 
         function UploadSessionToFirebase(jsonString) {
-            try {
-                const data = JSON.parse(jsonString);
-                database.ref("GameSessions").push(data);
-                console.log("Session uploaded successfully!");
-            } catch (e) {
-                console.error("Firebase upload error:", e);
+
+            if (!firebaseReady) {
+                console.log("Firebase not ready yet, retrying...");
+                
+                setTimeout(function() {
+                    UploadSessionToFirebase(jsonString);
+                }, 1000);
+
+                return;
             }
+
+            firebase.database().ref("GameSessions")
+                .push(JSON.parse(jsonString))
+                .then(() => {
+                    console.log("Session uploaded successfully.");
+                })
+                .catch((error) => {
+                    console.error("Firebase upload error:", error);
+                });
         }
+
+
+
+      
+    </script>
+
+    <!-- Leaderboard -->
+    <script>
+    function FetchLeaderboardData() {
+
+        firebase.database().ref("GameSessions").once("value")
+            .then(function(snapshot) {
+
+                if (!snapshot.exists()) {
+                    unityInstance.SendMessage(
+                        "LeaderboardManager",
+                        "OnLeaderboardDataReceived",
+                        "[]"
+                    );
+                    return;
+                }
+
+                let data = snapshot.val();
+                let array = Object.values(data);
+
+                window.unityInstance.SendMessage(
+                    "LeaderboardManager",
+                    "OnLeaderboardDataReceived",
+                    JSON.stringify(array)
+                );
+            })
+            .catch(function(error) {
+                console.error("Leaderboard fetch error:", error);
+            });
+    }
     </script>
 </head>
 
 <body>
+    <!-- Rotate Device Overlay -->
+    <div id="rotateWarning" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    z-index: 9999;
+    text-align: center;
+    padding: 20px;">
+        <div style="font-size: 50px;">📱</div>
+        <div>Please rotate your device to landscape</div>
+    </div>
+
     <div id="unity-container">
         <canvas id="unity-canvas"></canvas>
     </div>
@@ -77,7 +160,8 @@
         var script = document.createElement("script");
         script.src = loaderUrl;
         script.onload = () => {
-            createUnityInstance(canvas, config);
+            createUnityInstance(canvas, config).then((instance) => {
+    window.unityInstance = instance;})
         };
         document.body.appendChild(script);
     </script>
@@ -89,6 +173,25 @@
         }
     });
     </script>
+
+    <!-- Orentation -->
+        <script>
+    function checkOrientation() {
+        var rotateWarning = document.getElementById("rotateWarning");
+
+        if (window.innerHeight > window.innerWidth) {
+            rotateWarning.style.display = "flex";
+        } else {
+            rotateWarning.style.display = "none";
+        }
+    }
+
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+
+    checkOrientation();
+    </script>
+
 
 </body>
 </html>

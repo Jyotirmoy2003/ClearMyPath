@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System;
 
 public class Typewriter : MonoSingleton<Typewriter>
 {
@@ -10,6 +11,7 @@ public class Typewriter : MonoSingleton<Typewriter>
     private Coroutine typingCoroutine;
     private string fullText;
     private bool isTyping;
+    public Action AC_OnTypingFinished;
 
     #region PUBLIC API
 
@@ -30,6 +32,8 @@ public class Typewriter : MonoSingleton<Typewriter>
         StopCoroutine(typingCoroutine);
         targetText.text = fullText;
         isTyping = false;
+
+        AC_OnTypingFinished?.Invoke();
     }
 
     #endregion
@@ -46,5 +50,6 @@ public class Typewriter : MonoSingleton<Typewriter>
         }
 
         isTyping = false;
+        AC_OnTypingFinished?.Invoke(); //notify
     }
 }

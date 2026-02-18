@@ -27,13 +27,10 @@ public class MalePlayerController : MonoBehaviour
         {
             isMobile = true;
             ConfigurAndroidInput();
+        }else
+        {
+            isMobile = false;
         }
-#if UNITY_ANDROID || UNITY_IOS
-        isMobile = true;
-        ConfigurAndroidInput();
-#else
-        isMobile = false;
-#endif
     }
 
 

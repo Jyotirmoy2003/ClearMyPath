@@ -23,13 +23,40 @@ public class GameManager : MonoSingleton<GameManager>
         {
             //something went wrong
             EasyPopupManager.Instance.CreateToast("ErrorNotValidGame");
-            Invoke(nameof(RequestRestartGame),3f);
+            
+            if(validateNumberOfSpawnHelper.Length > 2)
+            {
+                int lastBiggestNumber = 0;
+                SpawnHelpr havetoKill = null;
+                foreach(SpawnHelpr item in validateNumberOfSpawnHelper)
+                {
+                    if(item.TryGetComponent<PhotonView>(out var photonView))
+                    {
+                        if(photonView.ViewID > lastBiggestNumber)
+                        {
+                            havetoKill = item;
+                            lastBiggestNumber = photonView.ViewID;
+                        }
+                    }
+                }
+
+                if(havetoKill != null)
+                {
+                    //Destroy(havetoKill.gameObject);
+                }
+            }
+            else
+            {
+                Invoke(nameof(RequestRestartGame),3f);
+            }
         }
     }
 
     void RequestRestartGame()
     {
+    #if !UNITY_EDITOR
        WebglJavascriptBridge.Instance.OnApicationQuit();
+    #endif
     }
 
 

@@ -56,6 +56,7 @@ MonoBehaviour:
   stunDuration: 2
   exlosionEffect: {fileID: 8639767286149128383}
   exlosionAudio: {fileID: 2696955851539797966}
+  bombMesh: {fileID: 1079523424723687118}
 --- !u!135 &7729999028906537646
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -308,6 +309,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c7d9d5faeed54524080fbc6171cda46c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -316,6 +322,12 @@ PrefabInstance:
 --- !u!4 &410087571799805044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c7d9d5faeed54524080fbc6171cda46c,
+    type: 3}
+  m_PrefabInstance: {fileID: 160534213287963551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1079523424723687118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7d9d5faeed54524080fbc6171cda46c,
     type: 3}
   m_PrefabInstance: {fileID: 160534213287963551}
   m_PrefabAsset: {fileID: 0}

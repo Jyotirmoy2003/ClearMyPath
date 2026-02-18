@@ -37,7 +37,6 @@ public class FirebaseSessionLogger : MonoSingleton<FirebaseSessionLogger>
         currentSession.player1 = player1;
         currentSession.player2 = player2;
 
-        AddLog("Both players connected. Session started.");
     }
 
     public void AddLog(string message)
@@ -66,6 +65,15 @@ public class FirebaseSessionLogger : MonoSingleton<FirebaseSessionLogger>
         currentSession = null;
     }
 
+    public void SetCompletionTime(float time, bool publish)
+    {
+        if (currentSession == null) return;
+
+        currentSession.completionTime = time;
+        currentSession.publishScore = publish;
+    }
+
+
     #endregion
 
     #region APP LIFECYCLE
@@ -79,7 +87,7 @@ public class FirebaseSessionLogger : MonoSingleton<FirebaseSessionLogger>
     {
         if (!focus)
         {
-            EndAndUploadSession();
+            //EndAndUploadSession();
         }
     }
 

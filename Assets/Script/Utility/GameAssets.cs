@@ -10,6 +10,7 @@ public class GameAssets : MonoSingleton<GameAssets>
     public HoldButton maleLeftSideButton;
     public HoldButton maleRightSideButton;
     public HoldButton maleShootButton;
+    public int amountOFBombToStartTheGame = 20;
 
     public bool MasterSpawned = false;
     public bool clientSpawned = false;

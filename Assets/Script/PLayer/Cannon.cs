@@ -13,20 +13,30 @@ public class Cannon : MonoBehaviourPun
     [SerializeField] int totalAmountOfBoomb = 25;
 
     private float lastFireTime;
+    private bool isMobile = false;
 
     void Start()
     {
+        totalAmountOfBoomb  = GameAssets.Instance.amountOFBombToStartTheGame;
         UIManager.Instance.UpdateAmmunationInfo(totalAmountOfBoomb);
         bombPool = GameAssets.Instance.cannonPool;
+        ActionManager.AC_BombCollected += OnBombRecived;
+
+        isMobile = Application.isMobilePlatform;
+
     }
 
-
+    void OnBombRecived(int amout)
+    {
+        totalAmountOfBoomb += amout;
+        UIManager.Instance.UpdateAmmunationInfo(totalAmountOfBoomb);
+    }
     public void Fire()
     {
         if (!photonView.IsMine)
             return;
 
-        if(Cursor.lockState == CursorLockMode.None) return;
+        if( !isMobile && Cursor.lockState == CursorLockMode.None ) return;
 
         if(totalAmountOfBoomb <= 0)
         {

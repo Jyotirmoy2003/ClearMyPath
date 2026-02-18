@@ -71,7 +71,7 @@ public class HammerObstacle : ObstacleBase
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        Debug.Log("trigger layer tag:" +other.gameObject.layer +" and our layer "+platfromLayer.value);
+        //Debug.Log("trigger layer tag:" +other.gameObject.layer +" and our layer "+platfromLayer.value);
         if ((platfromLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             mashEffectParticle.Play();

@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b159f16cc318d43b46571a7bb3e32f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  ptv: {fileID: 6994594764098367973}
   ragdollSwitcher: {fileID: 3725554678842760430}
   maxHealth: 1
   PlayerDied:

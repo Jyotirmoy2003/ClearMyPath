@@ -1,5 +1,7 @@
 mergeInto(LibraryManager.library, {
-
+     FetchLeaderboard: function () {
+        FetchLeaderboardData();
+    },
     UploadSession: function (jsonPtr) {
         var jsonString = UTF8ToString(jsonPtr);
         UploadSessionToFirebase(jsonString);

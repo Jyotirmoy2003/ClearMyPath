@@ -54,6 +54,8 @@ MonoBehaviour:
   - PlayParticleOnMultiplayer
   - RPC_DoInitialize
   - RPC_StunObstacle
+  - RPC_ConfirmCollect
+  - RPC_RequestCollect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

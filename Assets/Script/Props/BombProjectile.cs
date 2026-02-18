@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class BombProjectile : MonoBehaviour
 {
@@ -8,20 +9,26 @@ public class BombProjectile : MonoBehaviour
     [SerializeField] private float stunDuration = 2f;
     [SerializeField] ParticleSystem exlosionEffect;
     [SerializeField] AudioSource exlosionAudio;
+    [SerializeField] GameObject bombMesh;
 
     private ObjectPool pool;
     private float timer;
     private bool isAuthoritative;
+    private Action updateDel;
 
     public void Initialize(ObjectPool objectPool, bool authoritative)
     {
         pool = objectPool;
         isAuthoritative = authoritative;
         timer = lifetime;
+        bombMesh.SetActive(true);
+        updateDel += MoveForward;
         Invoke(nameof(ReturnToPool),lifetime);
     }
 
-    private void Update()
+    private void Update()=>updateDel?.Invoke();
+
+    void MoveForward()
     {
         transform.position += transform.forward * speed * Time.deltaTime;
 
@@ -40,6 +47,8 @@ public class BombProjectile : MonoBehaviour
             }
         }
 
+        updateDel -= MoveForward;
+        bombMesh.SetActive(false);
         
         exlosionAudio.Play();
         exlosionEffect.Play();

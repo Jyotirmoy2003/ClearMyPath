@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using ExitGames.Client.Photon;
+using System.Collections.Generic;
+using NaughtyAttributes;
 
 public class RoomReadyManager : MonoBehaviourPunCallbacks
 {
@@ -11,9 +13,26 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button readyStartButton;
     [SerializeField] private TMP_Text buttonText;
     [SerializeField] private TMP_Text countdownText;
+    [Header("Visual Icon Ref")]
+    [Foldout("Avater")][SerializeField] Image maleAvater;
+    [Foldout("Avater")][SerializeField] GameObject fadedMaleAvater;
+    [Foldout("Avater")][SerializeField] List<Sprite> avialbeMaleAvaters = new List<Sprite>();
+    [Foldout("Avater")][SerializeField] Image femaleAvater;
+    [Foldout("Avater")][SerializeField] GameObject fadedFemaleAvater;
+    [Foldout("Avater")][SerializeField] List<Sprite> avialbeFemaleAvaters = new List<Sprite>();
+    [SerializeField] Image readyStatusMaster;
+    [SerializeField] Image readyStatusClient;
+    [SerializeField] Sprite checkMark;
+    [SerializeField] Sprite cross;
+    
 
     private const string READY_KEY = "Ready";
     private bool gameStarting = false;
+
+    private int selectedMaleAvaterIndex = 0;
+    private int selectedFemaleAvaterIndex = 0;
+    private const string MALE_AVATAR_KEY = "MaleAvatar";
+    private const string FEMALE_AVATAR_KEY = "FemaleAvatar";
 
     
 
@@ -24,12 +43,47 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
         UpdateButtonState();
         countdownText.text = "";
 
+        //when joined room master data always stays same
+        readyStatusMaster.sprite = checkMark;
+
+        SelectAvaterMale();
+        FetchExistingAvatars();
+       
+
         CheckPlayerAndShowMessg();
     }
+
+    void SelectAvaterMale()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            selectedMaleAvaterIndex = Random.Range(0, avialbeMaleAvaters.Count);
+
+            Hashtable props = new Hashtable
+            {
+                { MALE_AVATAR_KEY, selectedMaleAvaterIndex }
+            };
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+        else
+        {
+            selectedFemaleAvaterIndex = Random.Range(0, avialbeFemaleAvaters.Count);
+
+            Hashtable props = new Hashtable
+            {
+                { FEMALE_AVATAR_KEY, selectedFemaleAvaterIndex }
+            };
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+    }
+
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         CheckPlayerAndShowMessg();
+        
     }
 
     void CheckPlayerAndShowMessg()
@@ -42,6 +96,7 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
     Send this room code to your favorite human and tell them to join you.
     This story needs two players… and maybe a little love.");
             FirebaseSessionLogger.Instance.StartSession();
+            FirebaseSessionLogger.Instance.SetPlayers(PhotonNetwork.PlayerList[0].NickName,"No One Joined yet");
             FirebaseSessionLogger.Instance.AddLog("Master ping: "+PingFPSDebugger.Instance.GetCurrentPing().ToString());
         }
         else
@@ -220,8 +275,26 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        //avatar
+        if (changedProps.ContainsKey(MALE_AVATAR_KEY))
+        {
+            int index = (int)changedProps[MALE_AVATAR_KEY];
+            maleAvater.sprite = avialbeMaleAvaters[index];
+            fadedMaleAvater.SetActive(false);
+            maleAvater.gameObject.SetActive(true);
+        }
+
+        if (changedProps.ContainsKey(FEMALE_AVATAR_KEY))
+        {
+            int index = (int)changedProps[FEMALE_AVATAR_KEY];
+            femaleAvater.sprite = avialbeFemaleAvaters[index];
+            fadedFemaleAvater.SetActive(false);
+            femaleAvater.gameObject.SetActive(true);
+        }
+        //ready
         if (changedProps.ContainsKey(READY_KEY))
         {
+            readyStatusClient.sprite = checkMark;
             UpdateButtonState();
         }
     }
@@ -245,6 +318,25 @@ public class RoomReadyManager : MonoBehaviourPunCallbacks
         readyStartButton.interactable = true;
         #endif
     }
+
+    void FetchExistingAvatars()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties.ContainsKey(MALE_AVATAR_KEY))
+            {
+                int index = (int)player.CustomProperties[MALE_AVATAR_KEY];
+                maleAvater.sprite = avialbeMaleAvaters[index];
+            }
+
+            if (player.CustomProperties.ContainsKey(FEMALE_AVATAR_KEY))
+            {
+                int index = (int)player.CustomProperties[FEMALE_AVATAR_KEY];
+                femaleAvater.sprite = avialbeFemaleAvaters[index];
+            }
+        }
+    }
+
 
     #endregion
 }

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class CheckpointSystem : MonoSingleton<CheckpointSystem>
 {
 
-    [SerializeField] private float respawnDelay = 2f;
+    [SerializeField] private float respawnDelay = 4f;
     [SerializeField] GameEvent Event_OnPlayerRespawned;
      [Header("Events")]
     public UnityEvent playerRespawned;
