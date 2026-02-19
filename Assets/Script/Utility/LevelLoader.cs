@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using System.Collections;
 
 public class LevelLoader : MonoBehaviourPun
 {
@@ -20,6 +21,7 @@ public class LevelLoader : MonoBehaviourPun
     }
 
     #region LOAD BY NAME
+    public int lastPlayedLevelIndex = -1;
 
     public void LoadScene(string sceneName)
     {
@@ -40,6 +42,14 @@ public class LevelLoader : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
         PhotonNetwork.LoadLevel(sceneName);
+    }
+
+    public void LoadLevel(int index)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(index);
+        }
     }
 
     #endregion
@@ -79,29 +89,79 @@ public class LevelLoader : MonoBehaviourPun
         FirebaseSessionLogger.Instance.AddLog("levelStarted: "+SceneManager.GetSceneByBuildIndex(nextIndex));
     }
 
+
     #endregion
 
     #region RESTART
 
+    // public void RestartLevel()
+    // {
+        
+    //     if(PhotonNetwork.IsMasterClient)
+    //     {
+    //         PerformRestart();
+    //     }else
+    //         photonView.RPC(nameof(RequestRestart), RpcTarget.MasterClient);
+        
+    // }
+
+    // [PunRPC]
+    // private void RequestRestart()
+    // {
+    //     if (!PhotonNetwork.IsMasterClient) return;
+    //     PerformRestart();
+    // }
+
+    // private void PerformRestart()
+    // {
+    //     Debug.Log("Restart requested by: " + PhotonNetwork.NickName);
+    //     Debug.Log("IsMaster: " + PhotonNetwork.IsMasterClient);
+    //     Debug.Log("Players in room: " + PhotonNetwork.CurrentRoom.PlayerCount);
+
+    //     StartCoroutine(DelayedRestart());
+    // }
+
+    // private IEnumerator DelayedRestart()
+    // {
+    //     PhotonNetwork.AutomaticallySyncScene = true;
+    //     yield return new WaitForSeconds(0.2f);
+
+    //     int currentIndex = SceneManager.GetActiveScene().buildIndex;
+    //     PhotonNetwork.LoadLevel(currentIndex);
+    // }
+
+    public void SaveThisLevelIndex()
+    {
+        lastPlayedLevelIndex = SceneManager.GetActiveScene().buildIndex;
+    }
     public void RestartLevel()
     {
-        
-        
-        photonView.RPC(nameof(RequestRestart), RpcTarget.All);
-        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(RPC_Restart), RpcTarget.All);
+        }
+        else
+        {
+            photonView.RPC(nameof(RequestRestart), RpcTarget.MasterClient);
+        }
     }
 
     [PunRPC]
     private void RequestRestart()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        PerformRestart();
+
+        photonView.RPC(nameof(RPC_Restart), RpcTarget.All);
     }
 
-    private void PerformRestart()
+    [PunRPC]
+    private void RPC_Restart()
     {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        PhotonNetwork.LoadLevel(currentIndex);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            PhotonNetwork.LoadLevel("FakeLevel");
+        }
     }
 
     #endregion

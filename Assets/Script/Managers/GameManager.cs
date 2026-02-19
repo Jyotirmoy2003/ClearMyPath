@@ -9,6 +9,8 @@ public class GameManager : MonoSingleton<GameManager>
     public bool isGamePaused = false;
     [SerializeField] float gamevalidateTime = 3f;
     private SpawnHelpr[] validateNumberOfSpawnHelper;
+    private bool isGameRestarting = false;
+    [SerializeField] PhotonView pv;
 
     void Start()
     {
@@ -24,38 +26,40 @@ public class GameManager : MonoSingleton<GameManager>
             //something went wrong
             EasyPopupManager.Instance.CreateToast("ErrorNotValidGame");
             
-            if(validateNumberOfSpawnHelper.Length > 2)
-            {
-                int lastBiggestNumber = 0;
-                SpawnHelpr havetoKill = null;
-                foreach(SpawnHelpr item in validateNumberOfSpawnHelper)
-                {
-                    if(item.TryGetComponent<PhotonView>(out var photonView))
-                    {
-                        if(photonView.ViewID > lastBiggestNumber)
-                        {
-                            havetoKill = item;
-                            lastBiggestNumber = photonView.ViewID;
-                        }
-                    }
-                }
+            // if(validateNumberOfSpawnHelper.Length > 2)
+            // {
+            //     int lastBiggestNumber = 0;
+            //     SpawnHelpr havetoKill = null;
+            //     foreach(SpawnHelpr item in validateNumberOfSpawnHelper)
+            //     {
+            //         if(item.TryGetComponent<PhotonView>(out var photonView))
+            //         {
+            //             if(photonView.ViewID > lastBiggestNumber)
+            //             {
+            //                 havetoKill = item;
+            //                 lastBiggestNumber = photonView.ViewID;
+            //             }
+            //         }
+            //     }
 
-                if(havetoKill != null)
-                {
-                    //Destroy(havetoKill.gameObject);
-                }
-            }
-            else
-            {
-                Invoke(nameof(RequestRestartGame),3f);
-            }
+            //     if(havetoKill != null)
+            //     {
+            //         //Destroy(havetoKill.gameObject);
+            //     }
+            // }
+            // else
+            // {
+            //     Invoke(nameof(RequestRestartGame),3f);
+            // }
+            Invoke(nameof(RequestRestartGame),3f);
         }
     }
 
     void RequestRestartGame()
     {
+        OnRestartButtonPressed();
     #if !UNITY_EDITOR
-       WebglJavascriptBridge.Instance.OnApicationQuit();
+       //WebglJavascriptBridge.Instance.OnApicationQuit();
     #endif
     }
 
@@ -93,6 +97,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnRestartButtonPressed()
     {
+        if(isGameRestarting) return;
+        isGameRestarting = true;
+        
+        if(!PhotonNetwork.IsMasterClient)pv.RPC(nameof(ReqResrart),RpcTarget.MasterClient);
+        else StartCoroutine(RestartRoutine());
+    }
+
+    [PunRPC]
+    void ReqResrart()
+    {
         StartCoroutine(RestartRoutine());
     }
 
@@ -102,6 +116,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         yield return new WaitForSeconds(1f);
 
+        LevelLoader.Instance.SaveThisLevelIndex();
         LevelLoader.Instance.RestartLevel();
     }
     public void Resumelevel()

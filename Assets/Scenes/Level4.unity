@@ -1398,6 +1398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 272983183}
   - component: {fileID: 272983184}
+  - component: {fileID: 272983185}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1436,6 +1437,29 @@ MonoBehaviour:
   unparentGameObject: 0
   isGamePaused: 0
   gamevalidateTime: 3
+  pv: {fileID: 272983185}
+--- !u!114 &272983185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272983182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 17
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &273934949
 GameObject:
   m_ObjectHideFlags: 0
@@ -5108,6 +5132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b482d9186cfa3a14ba78aae40efcbd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelLoader
+  lastPlayedLevelIndex: -1
 --- !u!114 &932787598
 MonoBehaviour:
   m_ObjectHideFlags: 0
