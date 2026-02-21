@@ -54,7 +54,6 @@ This project was built as a fast-paced multiplayer challenge and evolved into a 
 
 After completing the level, players can choose to publish their score.
 
-- Completion time is always saved.
 - Only published scores appear on leaderboard.
 - Fastest duos rank at the top.
 
@@ -98,7 +97,7 @@ Primary Target:
 
 ---
 
-## ❤️ Developer
+## Developer
 
 Developed by **Jyotirmoy Mondal**
 
