@@ -1,4 +1,5 @@
 # 💖 Clear My Path
+[![Play on itch.io](https://img.shields.io/badge/Play-Itch.io-FA5C5C?style=for-the-badge&logo=itch.io)](https://yourname.itch.io/clearmypath)
 
 A 2-Player Cooperative WebGL Game built with Unity + Photon PUN.
 
